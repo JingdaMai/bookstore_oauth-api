@@ -18,5 +18,6 @@ type dbRepository struct {
 }
 
 func (r *dbRepository) GetById(string) (*access_token.AccessToken, *errors.RestErr) {
+	// todo: implement get access token from CassandraDB
 	return nil, errors.NewInternalServerError("not implemented yet")
 }
