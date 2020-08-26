@@ -1,21 +1,20 @@
-package services
+package access_token
 
 import (
-	"github.com/JingdaMai/bookstore_oauth-api/src/domain/access_token"
 	"github.com/JingdaMai/bookstore_oauth-api/src/utils/errors"
 	"strings"
 )
 
 type Repository interface {
-	GetById(string) (*access_token.AccessToken, *errors.RestErr)
-	Create(access_token.AccessToken) *errors.RestErr
-	UpdateExpirationTime(access_token.AccessToken) *errors.RestErr
+	GetById(string) (*AccessToken, *errors.RestErr)
+	Create(AccessToken) *errors.RestErr
+	UpdateExpirationTime(AccessToken) *errors.RestErr
 }
 
 type Service interface {
-	GetById(string) (*access_token.AccessToken, *errors.RestErr)
-	Create(access_token.AccessToken) *errors.RestErr
-	UpdateExpirationTime(access_token.AccessToken) *errors.RestErr
+	GetById(string) (*AccessToken, *errors.RestErr)
+	Create(AccessToken) *errors.RestErr
+	UpdateExpirationTime(AccessToken) *errors.RestErr
 }
 
 type service struct {
@@ -28,7 +27,7 @@ func NewService(repo Repository) Service {
 	}
 }
 
-func (s *service) GetById(accessTokenId string) (*access_token.AccessToken, *errors.RestErr) {
+func (s *service) GetById(accessTokenId string) (*AccessToken, *errors.RestErr) {
 	accessTokenId = strings.TrimSpace(accessTokenId)
 	if accessTokenId == "" {
 		return nil, errors.NewBadRequestError("invalid access token")
@@ -40,14 +39,14 @@ func (s *service) GetById(accessTokenId string) (*access_token.AccessToken, *err
 	return accessToken, nil
 }
 
-func (s *service) Create(at access_token.AccessToken) *errors.RestErr {
+func (s *service) Create(at AccessToken) *errors.RestErr {
 	if err := at.Validate(); err != nil {
 		return err
 	}
 	return s.repository.Create(at)
 }
 
-func (s *service) UpdateExpirationTime(at access_token.AccessToken) *errors.RestErr {
+func (s *service) UpdateExpirationTime(at AccessToken) *errors.RestErr {
 	if err := at.Validate(); err != nil {
 		return err
 	}
