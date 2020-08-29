@@ -15,6 +15,11 @@ type AccessToken struct {
 	Expires     int64  `json:"expires"`
 }
 
+type AccessTokenRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 func (at *AccessToken) Validate() *errors.RestErr {
 	at.AccessToken = strings.TrimSpace(at.AccessToken)
 	if at.AccessToken == "" {
