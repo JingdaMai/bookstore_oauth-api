@@ -19,7 +19,7 @@ type RestUsersRepository interface {
 
 type usersRepository struct{}
 
-func NewRepository() RestUsersRepository {
+func NewRestUsersRepository() RestUsersRepository {
 	return &usersRepository{}
 }
 
@@ -30,7 +30,7 @@ func (r *usersRepository) LoginUser(email string, password string) (*users.User,
 	}
 
 	response := usersRestClient.Post("/users/login", request)
-	if response == nil || response.String() == "MockUp nil!" || response.Response == nil {
+	if response == nil || response.Response == nil {
 		return nil, errors.NewInternalServerError("invalid rest client response when trying to login user")
 	}
 
