@@ -1,6 +1,8 @@
 package access_token
 
 import (
+	"fmt"
+	crypto_utils "github.com/JingdaMai/bookstore_oauth-api/src/utils/crypto"
 	"github.com/JingdaMai/bookstore_oauth-api/src/utils/errors"
 	"strings"
 	"time"
@@ -16,7 +18,7 @@ type AccessTokenRequest struct {
 	GrantType string `json:"grant_type"`
 	Scope     string `json:"scope"`
 
-	// used for password grant_type
+	// used for password grant type
 	Username string `json:"username"`
 	Password string `json:"password"`
 
@@ -75,5 +77,5 @@ func (at *AccessToken) IsExpired() bool {
 }
 
 func (at *AccessToken) Generate() {
-	// todo
+	at.AccessToken = crypto_utils.GetMD5(fmt.Sprintf("at-%d-%d-ran", at.UserId, at.Expires))
 }
